@@ -349,13 +349,167 @@ function shareToWhatsapp() {
 }
 
 /**
- * Share to Instagram (copy for stories)
+ * Share to Instagram - Generate shareable image
+ * On mobile: Opens native share sheet (can select IG Stories directly)
+ * On desktop: Downloads image (IG doesn't have web share API)
  */
-function shareToInstagram() {
-    const text = `Today's Delulu Fortune\n\n"${currentFortune}"\n\ndelulufortune.com`;
-    copyText(text);
-    showToast('Copied! Now paste in your Instagram story');
-    trackShare();
+async function shareToInstagram() {
+    const fortuneCard = document.getElementById('fortuneCard');
+
+    if (!fortuneCard || typeof html2canvas === 'undefined') {
+        showToast('Loading... try again in a sec');
+        return;
+    }
+
+    // Check if mobile device
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+    showToast(isMobile ? 'Opening share menu...' : 'Creating image...');
+
+    try {
+        // Create a container for screenshot
+        const shareCard = document.createElement('div');
+        shareCard.id = 'shareCardCapture';
+        shareCard.innerHTML = `
+            <div class="share-card-inner">
+                <div class="share-header">
+                    <span class="share-logo">delulu fortune</span>
+                </div>
+                <div class="share-fortune">"${currentFortune}"</div>
+                <div class="share-stats">
+                    <span class="share-stat">aura: ${document.getElementById('auraValue')?.textContent || '+???'}</span>
+                    <span class="share-stat">delulu: ${document.getElementById('deluluValue')?.textContent || '99%'}</span>
+                </div>
+                <div class="share-vibe">${document.getElementById('vibeTag')?.textContent || 'main character energy'}</div>
+                <div class="share-footer">delulu.nytm.in</div>
+            </div>
+        `;
+
+        // Style the share card for capture (IG story ratio: 1080x1920, using 540x960)
+        shareCard.style.cssText = `
+            position: fixed;
+            top: -9999px;
+            left: -9999px;
+            width: 540px;
+            height: 720px;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            border-radius: 0;
+            font-family: 'Outfit', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        `;
+
+        const innerStyle = document.createElement('style');
+        innerStyle.textContent = `
+            #shareCardCapture .share-card-inner { text-align: center; width: 100%; }
+            #shareCardCapture .share-header { margin-bottom: 30px; }
+            #shareCardCapture .share-logo { 
+                font-family: 'Playfair Display', serif;
+                font-size: 32px; 
+                color: #ff6b35; 
+                font-weight: bold;
+            }
+            #shareCardCapture .share-fortune { 
+                font-family: 'Playfair Display', serif;
+                font-size: 26px; 
+                color: #fff; 
+                font-style: italic;
+                line-height: 1.5;
+                margin-bottom: 40px;
+                padding: 0 10px;
+            }
+            #shareCardCapture .share-stats { 
+                display: flex; 
+                justify-content: center; 
+                gap: 40px; 
+                margin-bottom: 20px; 
+            }
+            #shareCardCapture .share-stat { 
+                font-size: 18px; 
+                color: #ffd23f;
+                font-weight: 600;
+            }
+            #shareCardCapture .share-vibe { 
+                display: inline-block;
+                background: linear-gradient(135deg, #ff6b35, #ff8a5c);
+                color: #1a1a1a;
+                padding: 10px 24px;
+                border-radius: 25px;
+                font-size: 16px;
+                font-weight: 600;
+                margin-bottom: 30px;
+            }
+            #shareCardCapture .share-footer { 
+                font-size: 14px; 
+                color: #666; 
+            }
+        `;
+
+        document.head.appendChild(innerStyle);
+        document.body.appendChild(shareCard);
+
+        // Generate image
+        const canvas = await html2canvas(shareCard, {
+            backgroundColor: '#1a1a1a',
+            scale: 2,
+            useCORS: true,
+            logging: false
+        });
+
+        // Cleanup
+        document.body.removeChild(shareCard);
+        document.head.removeChild(innerStyle);
+
+        // Convert to blob
+        canvas.toBlob(async (blob) => {
+            const file = new File([blob], 'delulu-fortune.png', { type: 'image/png' });
+
+            // Try Web Share API (works on mobile - opens share sheet with IG Stories option!)
+            if (navigator.share && navigator.canShare) {
+                try {
+                    if (navigator.canShare({ files: [file] })) {
+                        await navigator.share({
+                            files: [file],
+                            title: 'My Delulu Fortune',
+                            text: 'delulu.nytm.in'
+                        });
+                        showToast('done! check your story');
+                        trackShare();
+                        return;
+                    }
+                } catch (e) {
+                    if (e.name === 'AbortError') {
+                        showToast('cancelled');
+                        return;
+                    }
+                    // Fall through to download
+                }
+            }
+
+            // Fallback: Download the image (desktop or unsupported mobile)
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'delulu-fortune.png';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            if (isMobile) {
+                showToast('saved! open IG → add to story');
+            } else {
+                showToast('saved! upload to your IG story');
+            }
+            trackShare();
+        }, 'image/png', 1);
+
+    } catch (error) {
+        console.error('Error generating image:', error);
+        showToast('oops, try again!');
+    }
 }
 
 /**
