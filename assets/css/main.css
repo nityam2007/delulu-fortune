@@ -303,10 +303,45 @@ body::before {
     opacity: 1;
 }
 
+/* Primary Story Share Button */
+.share-story-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    width: 100%;
+    max-width: 280px;
+    padding: var(--space-md) var(--space-lg);
+    background: linear-gradient(135deg, #833AB4, #E1306C, #F77737);
+    border: none;
+    border-radius: var(--radius-md);
+    color: #fff;
+    font-family: var(--font-main);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: var(--space-lg);
+}
+
+.share-story-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.share-story-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(225, 48, 108, 0.4);
+}
+
+.share-story-btn:active {
+    transform: translateY(0);
+}
+
 .share-text {
     color: var(--text-muted);
-    font-size: 0.8rem;
-    margin-bottom: var(--space-md);
+    font-size: 0.75rem;
+    margin-bottom: var(--space-sm);
 }
 
 .share-buttons {
@@ -352,6 +387,11 @@ body::before {
 .share-btn.instagram:hover {
     border-color: #e1306c;
     color: #e1306c;
+}
+
+.share-btn.download:hover {
+    border-color: var(--accent-orange);
+    color: var(--accent-orange);
 }
 
 .copy-toast {

@@ -176,6 +176,7 @@ function initEventListeners() {
     const shareTwitter = document.getElementById('shareTwitter');
     const shareWhatsapp = document.getElementById('shareWhatsapp');
     const shareInstagram = document.getElementById('shareInstagram');
+    const shareDownload = document.getElementById('shareDownload');
     const shareCopy = document.getElementById('shareCopy');
     const logoIcon = document.getElementById('logoIcon');
 
@@ -185,6 +186,7 @@ function initEventListeners() {
     shareTwitter?.addEventListener('click', shareToTwitter);
     shareWhatsapp?.addEventListener('click', shareToWhatsapp);
     shareInstagram?.addEventListener('click', shareToInstagram);
+    shareDownload?.addEventListener('click', downloadFortuneImage);
     shareCopy?.addEventListener('click', copyToClipboard);
 
     logoIcon?.addEventListener('click', changeThemeColor);
@@ -508,6 +510,96 @@ async function shareToInstagram() {
 
     } catch (error) {
         console.error('Error generating image:', error);
+        showToast('oops, try again!');
+    }
+}
+
+/**
+ * Download fortune image directly (for manual sharing to any platform)
+ */
+async function downloadFortuneImage() {
+    if (typeof html2canvas === 'undefined') {
+        showToast('Loading... try again');
+        return;
+    }
+
+    showToast('Saving image...');
+
+    try {
+        // Reuse the same image generation logic
+        const shareCard = document.createElement('div');
+        shareCard.id = 'shareCardCapture';
+        shareCard.innerHTML = `
+            <div class="share-card-inner">
+                <div class="share-header">
+                    <span class="share-logo">delulu fortune</span>
+                </div>
+                <div class="share-fortune">"${currentFortune}"</div>
+                <div class="share-stats">
+                    <span class="share-stat">aura: ${document.getElementById('auraValue')?.textContent || '+???'}</span>
+                    <span class="share-stat">delulu: ${document.getElementById('deluluValue')?.textContent || '99%'}</span>
+                </div>
+                <div class="share-vibe">${document.getElementById('vibeTag')?.textContent || 'main character energy'}</div>
+                <div class="share-footer">delulu.nytm.in</div>
+            </div>
+        `;
+
+        shareCard.style.cssText = `
+            position: fixed;
+            top: -9999px;
+            left: -9999px;
+            width: 540px;
+            height: 720px;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            border-radius: 0;
+            font-family: 'Outfit', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        `;
+
+        const innerStyle = document.createElement('style');
+        innerStyle.textContent = `
+            #shareCardCapture .share-card-inner { text-align: center; width: 100%; }
+            #shareCardCapture .share-header { margin-bottom: 30px; }
+            #shareCardCapture .share-logo { font-family: 'Playfair Display', serif; font-size: 32px; color: #ff6b35; font-weight: bold; }
+            #shareCardCapture .share-fortune { font-family: 'Playfair Display', serif; font-size: 26px; color: #fff; font-style: italic; line-height: 1.5; margin-bottom: 40px; padding: 0 10px; }
+            #shareCardCapture .share-stats { display: flex; justify-content: center; gap: 40px; margin-bottom: 20px; }
+            #shareCardCapture .share-stat { font-size: 18px; color: #ffd23f; font-weight: 600; }
+            #shareCardCapture .share-vibe { display: inline-block; background: linear-gradient(135deg, #ff6b35, #ff8a5c); color: #1a1a1a; padding: 10px 24px; border-radius: 25px; font-size: 16px; font-weight: 600; margin-bottom: 30px; }
+            #shareCardCapture .share-footer { font-size: 14px; color: #666; }
+        `;
+
+        document.head.appendChild(innerStyle);
+        document.body.appendChild(shareCard);
+
+        const canvas = await html2canvas(shareCard, {
+            backgroundColor: '#1a1a1a',
+            scale: 2,
+            useCORS: true,
+            logging: false
+        });
+
+        document.body.removeChild(shareCard);
+        document.head.removeChild(innerStyle);
+
+        canvas.toBlob((blob) => {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'delulu-fortune.png';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            showToast('saved! share anywhere');
+            trackShare();
+        }, 'image/png', 1);
+
+    } catch (error) {
+        console.error('Error:', error);
         showToast('oops, try again!');
     }
 }
