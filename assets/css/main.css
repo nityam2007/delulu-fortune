@@ -1,0 +1,535 @@
+/* ========================================
+   Main.css | Today's Delulu Fortune
+   Fun chaotic indie vibes - not AI generic
+   ======================================== */
+
+:root {
+    /* Dark base with warm chaos */
+    --bg-dark: #1a1a1a;
+    --bg-card: #252525;
+
+    /* Warm chaotic palette - feels human */
+    --accent-orange: #ff6b35;
+    --accent-yellow: #ffd23f;
+    --accent-coral: #ff8a5c;
+    --accent-cream: #fff5e6;
+
+    /* Text */
+    --text-bright: #ffffff;
+    --text-dim: #999999;
+    --text-muted: #666666;
+
+    /* Spacing */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-2xl: 3rem;
+
+    /* Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --radius-full: 50%;
+
+    /* Fonts */
+    --font-main: 'Outfit', system-ui, sans-serif;
+    --font-display: 'Playfair Display', Georgia, serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-main);
+    background: var(--bg-dark);
+    color: var(--text-bright);
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+}
+
+/* Simple grain texture - feels indie */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* No fancy particles - just simple */
+.particles,
+.orb,
+.orb-1,
+.orb-2,
+.orb-3 {
+    display: none;
+}
+
+/* Container */
+.container {
+    position: relative;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: var(--space-lg);
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+/* Header - simple and fun */
+.header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+}
+
+.logo {
+    margin-bottom: var(--space-md);
+}
+
+.logo-icon {
+    display: none;
+    /* Hide SVG, use text */
+}
+
+.logo-text {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 7vw, 2rem);
+    font-weight: 700;
+    color: var(--accent-orange);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.tagline {
+    font-size: 0.95rem;
+    color: var(--text-dim);
+    font-weight: 400;
+}
+
+.tagline em {
+    color: var(--accent-yellow);
+    font-style: normal;
+    font-weight: 500;
+}
+
+/* Fortune Section */
+.fortune-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+}
+
+/* Crystal ball - simple circle */
+.crystal-ball {
+    width: 100px;
+    height: 100px;
+    border: 3px solid var(--accent-orange);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: var(--bg-card);
+}
+
+.crystal-ball:hover {
+    border-color: var(--accent-yellow);
+    transform: scale(1.05);
+}
+
+.crystal-ball.hidden {
+    display: none;
+}
+
+.crystal-glow,
+.crystal-rings,
+.ring {
+    display: none;
+}
+
+.crystal-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.crystal-icon {
+    width: 40px;
+    height: 40px;
+    color: var(--accent-orange);
+}
+
+/* Fortune Card */
+.fortune-card {
+    width: 100%;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+}
+
+.fortune-card.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.card-inner {
+    background: var(--bg-card);
+    border: 2px solid #333;
+    border-radius: var(--radius-md);
+    padding: var(--space-xl);
+}
+
+.card-glow {
+    display: none;
+}
+
+.fortune-content {
+    text-align: center;
+}
+
+.fortune-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+}
+
+.sparkle-icon {
+    width: 12px;
+    height: 12px;
+    color: var(--accent-yellow);
+}
+
+.date {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.fortune-text {
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 5vw, 1.4rem);
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--text-bright);
+    margin-bottom: var(--space-lg);
+    font-style: italic;
+}
+
+.loading-text {
+    color: var(--text-dim);
+}
+
+.fortune-footer {
+    display: flex;
+    justify-content: center;
+}
+
+.cosmic-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.tag-icon {
+    width: 12px;
+    height: 12px;
+}
+
+/* Reveal Button */
+.reveal-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-xl);
+    font-family: var(--font-main);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--bg-dark);
+    background: var(--accent-orange);
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.reveal-btn:hover {
+    background: var(--accent-yellow);
+    transform: translateY(-2px);
+}
+
+.reveal-btn.hidden {
+    display: none;
+}
+
+.btn-icon {
+    width: 14px;
+    height: 14px;
+}
+
+/* Share Section */
+.share-section {
+    margin-top: var(--space-xl);
+    text-align: center;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.share-section.visible {
+    opacity: 1;
+}
+
+.share-text {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-bottom: var(--space-md);
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-sm);
+}
+
+.share-btn {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    border: 1px solid #333;
+    background: var(--bg-card);
+    color: var(--text-bright);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.share-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.share-btn:hover {
+    border-color: var(--accent-orange);
+    color: var(--accent-orange);
+}
+
+.share-btn.twitter:hover {
+    border-color: #1da1f2;
+    color: #1da1f2;
+}
+
+.share-btn.whatsapp:hover {
+    border-color: #25d366;
+    color: #25d366;
+}
+
+.share-btn.instagram:hover {
+    border-color: #e1306c;
+    color: #e1306c;
+}
+
+.copy-toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--accent-orange);
+    color: var(--bg-dark);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 500;
+    opacity: 0;
+    transition: all 0.2s ease;
+}
+
+.copy-toast.visible {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+/* Info Section */
+.info-section {
+    margin-top: var(--space-xl);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.info-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    border-left: 2px solid var(--accent-orange);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.info-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--accent-orange);
+    flex-shrink: 0;
+}
+
+.info-card p {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+}
+
+/* Footer */
+.footer {
+    margin-top: auto;
+    padding-top: var(--space-xl);
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    width: 100%;
+}
+
+.footer p {
+    margin-bottom: var(--space-xs);
+}
+
+.disclaimer {
+    opacity: 0.6;
+}
+
+.footer-links {
+    margin-top: var(--space-md);
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+}
+
+.footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    color: var(--accent-orange);
+}
+
+.footer-links .divider {
+    display: none;
+}
+
+/* Ad Slots */
+.ad-slot {
+    width: 100%;
+    margin: var(--space-lg) 0;
+    position: relative;
+}
+
+.ad-label {
+    position: absolute;
+    top: 4px;
+    right: 8px;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+}
+
+.ad-placeholder {
+    width: 100%;
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px dashed #333;
+    border-radius: var(--radius-sm);
+}
+
+.ad-placeholder span {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.ad-top {
+    margin-bottom: var(--space-xl);
+}
+
+.ad-middle {
+    margin-top: var(--space-xl);
+}
+
+/* Animation */
+.fortune-card.animate-reveal {
+    animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(0.95);
+    }
+
+    50% {
+        transform: scale(1.02);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+    .container {
+        padding: var(--space-md);
+    }
+
+    .card-inner {
+        padding: var(--space-lg);
+    }
+
+    .share-btn {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (min-width: 600px) {
+    .container {
+        padding: var(--space-xl);
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>delulu fortune - your daily cosmic nonsense</title>
+    <meta name="description"
+        content="get your daily delulu fortune. someone will think about you... probably. new fortunes every midnight.">
+    <meta name="keywords" content="delulu, fortune, daily fortune, horoscope, zodiac, meme, funny, relatable, gen z">
+    <meta name="author" content="delulu fortune">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://delulu.nytm.in/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://delulu.nytm.in/">
+    <meta property="og:title" content="delulu fortune">
+    <meta property="og:description"
+        content="the universe has very specific things to say. get your daily delulu fortune.">
+    <meta property="og:image" content="https://delulu.nytm.in/assets/images/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="delulu fortune">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://delulu.nytm.in/">
+    <meta name="twitter:title" content="delulu fortune">
+    <meta name="twitter:description"
+        content="the universe has very specific things to say. get your daily delulu fortune.">
+    <meta name="twitter:image" content="https://delulu.nytm.in/assets/images/og-image.png">
+
+    <!-- PWA -->
+    <meta name="theme-color" content="#1a1a1a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" href="assets/images/icon-192.png">
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%23ff6b35'/></svg>">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;1,400&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/main.css">
+
+    <!-- AdSense - uncomment when approved
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX" crossorigin="anonymous"></script>
+    -->
+</head>
+
+<body>
+    <main class="container">
+        <!-- Ad: Top -->
+        <div class="ad-slot ad-top">
+            <span class="ad-label">ad</span>
+            <div class="ad-placeholder"><span>advertisement</span></div>
+        </div>
+
+        <header class="header">
+            <div class="logo">
+                <h1 class="logo-text">delulu fortune</h1>
+            </div>
+            <p class="tagline">the universe has <em>very specific</em> things to say</p>
+        </header>
+
+        <section class="fortune-section">
+            <div class="crystal-ball" id="crystalBall">
+                <div class="crystal-inner">
+                    <svg class="crystal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="12" cy="12" r="10" />
+                        <circle cx="12" cy="12" r="4" />
+                        <path d="M12 2v2M12 20v2M2 12h2M20 12h2" />
+                    </svg>
+                </div>
+            </div>
+
+            <div class="fortune-card" id="fortuneCard">
+                <div class="card-inner">
+                    <div class="fortune-content">
+                        <div class="fortune-header">
+                            <svg class="sparkle-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <circle cx="12" cy="12" r="3" />
+                            </svg>
+                            <span class="date" id="fortuneDate"></span>
+                            <svg class="sparkle-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <circle cx="12" cy="12" r="3" />
+                            </svg>
+                        </div>
+                        <p class="fortune-text" id="fortuneText">
+                            <span class="loading-text">asking the cosmos...</span>
+                        </p>
+                        <div class="fortune-footer">
+                            <span class="cosmic-tag" id="cosmicTag">loading</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="reveal-btn" id="revealBtn">
+                <span>show me</span>
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+            </button>
+        </section>
+
+        <section class="share-section" id="shareSection">
+            <p class="share-text">share this nonsense:</p>
+            <div class="share-buttons">
+                <button class="share-btn twitter" id="shareTwitter" title="twitter">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg>
+                </button>
+                <button class="share-btn whatsapp" id="shareWhatsapp" title="whatsapp">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                    </svg>
+                </button>
+                <button class="share-btn copy" id="shareCopy" title="copy">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="9" y="9" width="13" height="13" rx="2" />
+                        <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                    </svg>
+                </button>
+            </div>
+            <div class="copy-toast" id="copyToast">copied!</div>
+        </section>
+
+        <!-- Ad: Middle -->
+        <div class="ad-slot ad-middle">
+            <span class="ad-label">ad</span>
+            <div class="ad-placeholder"><span>advertisement</span></div>
+        </div>
+
+        <section class="info-section">
+            <div class="info-card">
+                <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 6v6l4 2" />
+                </svg>
+                <p>same fortune for a few hours. refresh won't help.</p>
+            </div>
+            <div class="info-card">
+                <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+                </svg>
+                <p>5 fortunes per day. you get a random one.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>new fortunes at midnight</p>
+        <p class="disclaimer">means absolutely nothing. for fun only.</p>
+        <nav class="footer-links">
+            <a href="about.html">about</a>
+            <a href="privacy.html">privacy</a>
+            <a href="terms.html">terms</a>
+        </nav>
+    </footer>
+
+    <script src="scripts/app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,5 @@
+# Data Directory
+
+SQLite database (`fortune.db`) will be auto-created here on first request.
+
+This file exists to ensure the directory is tracked in version control.

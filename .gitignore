@@ -1,0 +1,22 @@
+# Database
+data/fortune.db
+data/*.db
+
+# System
+.DS_Store
+Thumbs.db
+*.log
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Backups
+*.bak
+*~
+
+# Environment (if using)
+.env
+.env.local

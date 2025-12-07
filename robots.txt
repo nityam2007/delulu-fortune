@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://delulu.nytm.in/sitemap.xml
+
+Disallow: /includes/
+Disallow: /data/
