@@ -6,6 +6,136 @@
 let currentFortune = '';
 let fortuneSlot = 0;
 
+// Gen Z chaos data
+const VIBE_TAGS = [
+    "main character energy",
+    "NPC mode activated",
+    "villain origin story loading",
+    "chronically online but thriving",
+    "situationship survivor",
+    "healing from a spotify playlist",
+    "touch grass era",
+    "hot girl summer (winter edition)",
+    "romanticizing everything era",
+    "delulu is the solulu",
+    "unhinged but make it cute",
+    "red flag collector",
+    "green flag only zone",
+    "trauma response but aesthetic",
+    "feral mode: ON"
+];
+
+const LUCKY_ITEMS = [
+    "biryani", "maggi at 2am", "perfect chai", "vada pav", "samosa",
+    "window seat", "green signal streak", "AC working", "phone at 100%",
+    "free wifi", "no traffic", "extra fries", "refund email", "surprise holiday",
+    "perfect photo first try", "song recommendation that hits", "finding cash in jeans"
+];
+
+const AVOID_ITEMS = [
+    "zoom calls", "ex's story", "\"we need to talk\" texts", "family WhatsApp group",
+    "autorickshaw in rain", "Monday motivation posts", "cold coffee", "low battery",
+    "parking hunt", "\"shaadi kab?\" aunties", "reply all emails", "3am thoughts",
+    "group project", "read receipts", "alarm snooze", "spicy food before meeting"
+];
+
+const SCREENSHOT_PROMPTS = [
+    "screenshot energy is strong today",
+    "this needs to be on your story tbh",
+    "send this to someone who needs it",
+    "save this for later (you won't)",
+    "screenshot now, think later",
+    "your sign to share this rn",
+    "main character moment captured"
+];
+
+// Simple seeded random
+function seededRandom(seed) {
+    const x = Math.sin(seed) * 10000;
+    return x - Math.floor(x);
+}
+
+// Get hash for user consistency
+function getUserSeed() {
+    const today = new Date().toISOString().split('T')[0];
+    let hash = 0;
+    const str = today + (localStorage.getItem('deluluSeed') || Math.random().toString());
+    for (let i = 0; i < str.length; i++) {
+        hash = ((hash << 5) - hash) + str.charCodeAt(i);
+        hash |= 0;
+    }
+    if (!localStorage.getItem('deluluSeed')) {
+        localStorage.setItem('deluluSeed', hash.toString());
+    }
+    return Math.abs(hash);
+}
+
+// Generate delulu stats
+function generateStats() {
+    const seed = getUserSeed();
+
+    // Aura: -100 to +1000 (weighted towards positive for comedy)
+    const auraBase = Math.floor(seededRandom(seed * 1) * 1100) - 100;
+    const aura = auraBase > 0 ? `+${auraBase}` : auraBase.toString();
+
+    // Delulu level: 60-99% (always high for comedy)
+    const deluluLevel = 60 + Math.floor(seededRandom(seed * 2) * 40);
+
+    // Random picks from arrays
+    const vibeIndex = Math.floor(seededRandom(seed * 3) * VIBE_TAGS.length);
+    const luckyIndex = Math.floor(seededRandom(seed * 4) * LUCKY_ITEMS.length);
+    const avoidIndex = Math.floor(seededRandom(seed * 5) * AVOID_ITEMS.length);
+    const promptIndex = Math.floor(seededRandom(seed * 6) * SCREENSHOT_PROMPTS.length);
+
+    return {
+        aura,
+        deluluLevel: `${deluluLevel}%`,
+        vibe: VIBE_TAGS[vibeIndex],
+        lucky: LUCKY_ITEMS[luckyIndex],
+        avoid: AVOID_ITEMS[avoidIndex],
+        prompt: SCREENSHOT_PROMPTS[promptIndex]
+    };
+}
+
+// Confetti burst
+function launchConfetti() {
+    const container = document.getElementById('confettiContainer');
+    if (!container) return;
+
+    const colors = ['#ff6b35', '#ffd23f', '#ff8a5c', '#c026d3', '#22d3ee', '#34d399'];
+    const confettiCount = 50;
+
+    for (let i = 0; i < confettiCount; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = `${Math.random() * 100}%`;
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDelay = `${Math.random() * 0.5}s`;
+        confetti.style.animationDuration = `${1 + Math.random() * 1}s`;
+        container.appendChild(confetti);
+    }
+
+    // Cleanup after animation
+    setTimeout(() => {
+        container.innerHTML = '';
+    }, 2500);
+}
+
+// Show delulu stats
+function showDeluluStats() {
+    const stats = generateStats();
+    const statsPanel = document.getElementById('deluluStats');
+
+    document.getElementById('auraValue').textContent = stats.aura;
+    document.getElementById('deluluValue').textContent = stats.deluluLevel;
+    document.getElementById('vibeTag').textContent = stats.vibe;
+    document.getElementById('luckyItem').textContent = stats.lucky;
+    document.getElementById('avoidItem').textContent = stats.avoid;
+    document.getElementById('screenshotPrompt').textContent = stats.prompt;
+
+    statsPanel?.classList.add('visible');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     initParticles();
     initEventListeners();
@@ -180,8 +310,13 @@ function showFortune(fortune, date, slot, cached) {
 
     fortuneCard?.classList.add('animate-reveal');
 
+    // Launch confetti!
+    launchConfetti();
+
     setTimeout(() => {
         shareSection?.classList.add('visible');
+        // Show the delulu stats after fortune
+        showDeluluStats();
     }, 400);
 }
 

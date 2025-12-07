@@ -526,6 +526,152 @@ body::before {
     }
 }
 
+/* ========================================
+   Delulu Stats Panel - the weird stuff
+   ======================================== */
+
+.delulu-stats {
+    width: 100%;
+    margin-top: var(--space-lg);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s ease;
+}
+
+.delulu-stats.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+}
+
+.stat-item {
+    background: var(--bg-card);
+    border: 1px solid #333;
+    border-radius: var(--radius-sm);
+    padding: var(--space-sm) var(--space-md);
+    text-align: center;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: var(--space-xs);
+}
+
+.stat-value {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.aura-stat .stat-value {
+    color: var(--accent-yellow);
+}
+
+.delulu-stat .stat-value {
+    color: var(--accent-coral);
+}
+
+.vibe-tag-container {
+    text-align: center;
+    margin-bottom: var(--space-md);
+}
+
+.vibe-tag {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent-orange), var(--accent-coral));
+    color: var(--bg-dark);
+    padding: var(--space-xs) var(--space-md);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: lowercase;
+}
+
+.lucky-items {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-md);
+}
+
+.lucky-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+}
+
+.lucky-item svg {
+    width: 8px;
+    height: 8px;
+}
+
+.lucky-item.good svg {
+    color: #34d399;
+}
+
+.lucky-item.bad svg {
+    color: #f87171;
+}
+
+.lucky-item strong {
+    color: var(--text-bright);
+    font-weight: 500;
+}
+
+.screenshot-prompt {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-style: italic;
+    opacity: 0.8;
+    padding: var(--space-sm);
+    border-top: 1px solid #333;
+}
+
+/* ========================================
+   Confetti Animation
+   ======================================== */
+
+.confetti-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 100;
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: -10px;
+    border-radius: 2px;
+    animation: confetti-fall 2s ease-out forwards;
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(100vh) rotate(720deg) scale(0);
+        opacity: 0;
+    }
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
     * {

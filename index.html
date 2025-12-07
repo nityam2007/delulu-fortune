@@ -110,7 +110,42 @@
                     <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
             </button>
+
+            <!-- Delulu Stats Panel - the weird stuff -->
+            <div class="delulu-stats" id="deluluStats">
+                <div class="stats-grid">
+                    <div class="stat-item aura-stat">
+                        <span class="stat-label">aura</span>
+                        <span class="stat-value" id="auraValue">+847</span>
+                    </div>
+                    <div class="stat-item delulu-stat">
+                        <span class="stat-label">delulu level</span>
+                        <span class="stat-value" id="deluluValue">94%</span>
+                    </div>
+                </div>
+                <div class="vibe-tag-container">
+                    <span class="vibe-tag" id="vibeTag">main character energy</span>
+                </div>
+                <div class="lucky-items">
+                    <div class="lucky-item good">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <circle cx="12" cy="12" r="10" />
+                        </svg>
+                        <span>lucky: <strong id="luckyItem">biryani</strong></span>
+                    </div>
+                    <div class="lucky-item bad">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <circle cx="12" cy="12" r="10" />
+                        </svg>
+                        <span>avoid: <strong id="avoidItem">zoom calls</strong></span>
+                    </div>
+                </div>
+                <p class="screenshot-prompt" id="screenshotPrompt">screenshot energy is strong today</p>
+            </div>
         </section>
+
+        <!-- Confetti Container -->
+        <div class="confetti-container" id="confettiContainer"></div>
 
         <section class="share-section" id="shareSection">
             <p class="share-text">share this nonsense:</p>
